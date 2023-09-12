@@ -1,26 +1,22 @@
 #!/bin/bash
-echo -n > /var/log/xray/access.log
+echo -n > /tmp/ipxray.txt
+data=( `cat /etc/xray/config.json | grep '###' | cut -d ' ' -f 2 | sort | uniq`);
 sleep 4
-data=( `ls /etc/funny/limit/vmess/ip`);
-    for user in "${data[@]}"
-    do
-        iplimit=$(cat /etc/funny/limit/vmess/ip/$user)
-        ehh=$(cat /var/log/xray/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq);
-        cekcek=$(echo -e "$ehh" | wc -l);
-        if [[ $cekcek -gt $iplimit ]]; then
-            exp=$(grep -w "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-                  sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-                  sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-                  sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-                  sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-                  sed -i "/^### $user $exp/d" /etc/vmess/.vmess.db
-                  systemctl restart xray >> /dev/null 2>&1
-                  jum2=$(cat /tmp/ipvmess.txt | wc -l)
-                  rm -rf /etc/funny/limit/vmess/ip/$user
-                  rm -fr /etc/funny/limit/vmess/quota/$user
-                  send_log
-                else
-            echo ""
-        fi
-        sleep 0.1
-    done
+for user in "${data[@]}"
+do
+iplimit=$(cat /etc/funny/limit/vmess/ip/$user)
+ehh=$( `cat /var/log/xray/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+cekcek=$(echo -e "$ehh" | wc -l);
+if [[ $cekcek -gt $iplimit ]]; then
+disable-xray  $user $cekcek $iplimit "$ehh"
+nais=3
+else
+echo > /dev/null
+fi
+sleep 0.1
+done
+if [[ $nais -gt 1 ]]; then
+systemctl restart xray
+else
+echo > /dev/null
+fi
