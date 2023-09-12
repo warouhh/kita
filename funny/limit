@@ -3,3 +3,4 @@ limit-ip-ssh
 limit-ip-vmess
 limit-ip-vless
 limit-ip-trojan
+limit-ip-socks5
