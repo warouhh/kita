@@ -1,0 +1,32 @@
+#!/bin/bash
+clear
+echo -e "\e[32m════════════════════════════════════════" | lolcat
+echo -e "             ═══[ PANEL VMESS MANAGER ]═══"
+echo -e "\e[32m════════════════════════════════════════" | lolcat
+echo -e ""
+echo -e " [\e[36m•1\e[0m] Create Account Vmess "
+echo -e " [\e[36m•2\e[0m] Trial Account Vmess "
+echo -e " [\e[36m•3\e[0m] Extending Account Vmess "
+echo -e " [\e[36m•4\e[0m] Delete Account Vmess "
+echo -e " [\e[36m•5\e[0m] Check User Login Vmess "
+echo -e " [\e[36m•6\e[0m] List Member Vmess Acount "
+echo -e ""
+echo -e " [\e[31m•0\e[0m] \e[31mBACK TO MENU\033[0m"
+echo -e ""
+echo -e   "Press x or [ Ctrl+C ] • To-Exit"
+echo ""
+echo -e "\e[32m════════════════════════════════════════" | lolcat
+echo -e ""
+read -p " Select menu :  "  opt
+echo -e ""
+case $opt in
+1) clear ; add-vmess ; exit ;;
+2) clear ; trialvmess ; exit ;;
+3) clear ; renew-vmess ; exit ;;
+4) clear ; del-vmess ; exit ;;
+5) clear ; cek-vmess ; exit ;;
+6) clear ; member-vmess ; exit ;;
+0) clear ; funny ; exit ;;
+x) exit ;;
+*) echo "Anda salah tekan " ; sleep 1 ; menu-vmess ;;
+esac

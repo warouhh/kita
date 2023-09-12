@@ -1,0 +1,42 @@
+#!/bin/bash
+clear
+echo -e "[ ${green}INFO${NC} ] Start " 
+sleep 0.5
+NC='\e[0m'
+green='\033[0;92m'       # Green
+systemctl stop nginx
+systemctl stop haproxy
+domain=$(cat /etc/xray/domain)
+rm -fr /etc/haproxy/funny.pem
+rm -fr /etc/xray/xray.crt
+rm -fr /etc/xray/xray.key
+sleep 1
+echo -e "[ ${red}WARNING${NC} ] Detected port 80 used by Nginx " 
+sleep 2
+echo -e "[ ${green}INFO${NC} ] Processing to stop $Cek " 
+sleep 1
+clear
+echo -e "[ ${green}INFO${NC} ] Starting renew cert... " 
+sleep 2
+clear
+/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
+sleep 2
+clear
+echo -e "[ ${green}INFO${NC} ] Renew cert done... " 
+sleep 2
+clear
+echo -e "[ ${green}INFO${NC} ] Starting service $Cek " 
+sleep 2
+echo $domain > /etc/xray/domain
+cat /etc/xray/xray.crt /etc/xray/xray.key | tee /etc/haproxy/funny.pem
+clear
+systemctl restart nginx
+systemctl restart haproxy
+clear
+echo -e "[ ${green}INFO${NC} ] All finished... " 
+sleep 0.5
+echo ""
+read -n 1 -s -r -p "Press any key to back on menu"
+funny
