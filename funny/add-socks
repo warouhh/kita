@@ -1,0 +1,91 @@
+NC='\e[0m'
+DEFBOLD='\e[39;1m'
+RB='\e[31;1m'
+GB='\e[32;1m'
+YB='\e[33;1m'
+BB='\e[34;1m'
+MB='\e[35;1m'
+CB='\e[35;1m'
+WB='\e[37;1m'
+clear
+domain=$(cat /etc/xray/domain)
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+echo -e "${BB}————————————————————————————————————————————————————${NC}"
+echo -e "                 ${WB}Add Socks5 Account${NC}                 "
+echo -e "${BB}————————————————————————————————————————————————————${NC}"
+read -p "Username         : " user
+read -p "Password         : " pass
+read -p "Quota (GB)       : " quota
+read -p "Max Ip login     : " iplimit
+read -p "Masaaktif        : " masaaktif
+CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
+if [[ ${CLIENT_EXISTS} == '1' ]]; then
+clear
+echo -e "${BB}————————————————————————————————————————————————————${NC}"
+echo -e "                 ${WB}Add Socks5 Account${NC}                 "
+echo -e "${BB}————————————————————————————————————————————————————${NC}"
+echo -e "${YB}A client with the specified name was already created, please choose another name.${NC}"
+echo -e "${BB}————————————————————————————————————————————————————${NC}"
+read -n 1 -s -r -p "Press any key to back on menu"
+add-socks
+fi
+done
+until [[ $pass =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+CLIENT_EXISTS=$(grep -w $pass /etc/xray/config.json | wc -l)
+if [[ ${CLIENT_EXISTS} == '1' ]]; then
+clear
+echo -e "${BB}————————————————————————————————————————————————————${NC}"
+echo -e "                 ${WB}Add Socks5 Account${NC}                 "
+echo -e "${BB}————————————————————————————————————————————————————${NC}"
+echo -e ""
+echo -e "${YB}A client with the specified name was already created, please choose another name.${NC}"
+echo -e ""
+echo -e "${BB}————————————————————————————————————————————————————${NC}"
+read -n 1 -s -r -p "Press any key to back on menu"
+add-socks
+fi
+done
+
+if [[ $quota -gt 0 ]]; then
+echo -e "$[$quota * 1024 * 1024 * 1024]" > /etc/funny/limit/socks5/quota/$user
+else
+echo > /dev/null
+fi
+if [[ $iplimit -gt 0 ]]; then
+echo -e "$iplimit" > /etc/funny/limit/socks5/ip/$user
+else
+echo > /dev/null
+fi
+exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+sed -i '/#socks$/a\#÷ '"$user $exp"'\
+},{"user": "'""$user""'","pass": "'""$pass""'","email": "'""$user""'"' /etc/xray/config.json
+echo -n "$user:$pass" | base64 > /tmp/log
+socks_base64=$(cat /tmp/log)
+sockslink1="socks://$socks_base64@$domain:443?path=/socks5&security=tls&host=$domain&type=ws&sni=$domain#$user"
+sockslink2="socks://$socks_base64@$domain:80?path=/socks5&security=none&host=$domain&type=ws#$user"
+rm -rf /tmp/log
+systemctl restart xray
+clear
+echo -e "————————————————————————————————————————————————————"
+echo -e "                   Socks5 Account                   "
+echo -e "————————————————————————————————————————————————————"
+echo -e "Username      : ${user}"
+echo -e "Password      : ${pass}"
+echo -e "Domain        : ${domain}"
+echo -e "Port TLS      : 443"
+echo -e "Port NTLS     : 80"
+echo -e "Path          : /socks5"
+echo -e "Alpn          : h2, http/1.1"
+echo -e "————————————————————————————————————————————————————"
+echo -e "Link TLS      : ${sockslink1}"
+echo -e "————————————————————————————————————————————————————"
+echo -e "Link NTLS     : ${sockslink2}"
+echo -e "————————————————————————————————————————————————————"
+echo -e "Expired On    : $exp"
+echo -e "————————————————————————————————————————————————————"
+echo " "
+echo " "
+echo " "
+read -n 1 -s -r -p "Press any key to back on menu"
+clear
+socks
