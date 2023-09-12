@@ -21,7 +21,7 @@ LIGHT='\033[0;37m'
 echo 1 > /proc/sys/vm/drop_caches
 run_izin() {
   # Link izin IP VPS
-  url_izin='https://raw.githubusercontent.com/Rerechan02/iziznscript/main/ip'
+  url_izin='https://raw.githubusercontent.com/warouhh/izin_kita/main/ip'
 
   # Mendapatkan IP VPS saat ini
   ip_vps=$(curl -s ifconfig.me)
@@ -51,7 +51,7 @@ run_izin() {
       # Add your message here for when the VPS doesn't have permission
 clear
       echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | lolcat
-      echo -e "                 • FunnyVpn •                 "
+      echo -e "                 • CLOUDVPN •                 "
       echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | lolcat
       echo -e ""
       echo -e "\e[93m Nama\e[32;1m   : $nama "
