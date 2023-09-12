@@ -22,7 +22,7 @@
           "decryption":"none",
             "clients": [
                {
-                 "id": "0c2f11ae-f175-4730-a02b-9a9fe9e7cb3a"                 
+                 "id": "cfbbaafc-8d52-450c-9fb0-145bc8221e6d"                 
 #vless
              }
           ]
@@ -41,7 +41,7 @@
       "settings": {
             "clients": [
                {
-                 "id": "0c2f11ae-f175-4730-a02b-9a9fe9e7cb3a",
+                 "id": "cfbbaafc-8d52-450c-9fb0-145bc8221e6d",
                  "alterId": 0
 #vmess
              }
@@ -54,46 +54,6 @@
           }
         }
      },
-          {
-     "listen": "127.0.0.1",
-     "port": "23488",
-     "protocol": "vmess",
-      "settings": {
-            "clients": [
-               {
-                 "id": "cd3cf821-7f2b-42fa-a942-d266c26422ed",
-                 "alterId": 0
-#vmess
-             }
-          ]
-       },
-       "streamSettings":{
-         "network": "ws",
-            "wsSettings": {
-                "path": "/worryfree"
-          }
-        }
-     },
-     {
-     "listen": "127.0.0.1",
-     "port": "23499",
-     "protocol": "vmess",
-      "settings": {
-            "clients": [
-               {
-                 "id": "762c7362-817a-45de-85ac-3ccfcaeb02d6",
-                 "alterId": 0
-#vmess
-             }
-          ]
-       },
-       "streamSettings":{
-         "network": "ws",
-            "wsSettings": {
-                "path": "/kuota-habis"
-          }
-        }
-     },
     {
       "listen": "127.0.0.1",
       "port": "25432",
@@ -102,7 +62,7 @@
           "decryption":"none",		
            "clients": [
               {
-                 "password": "0c2f11ae-f175-4730-a02b-9a9fe9e7cb3a"
+                 "password": "cfbbaafc-8d52-450c-9fb0-145bc8221e6d"
 #trojanws
               }
           ],
@@ -115,6 +75,33 @@
             }
          }
      },
+    {
+      "listen": "127.0.0.1",
+      "port": "10006",
+      "protocol": "socks",
+      "settings": {
+        "auth": "password",
+        "accounts": [
+            {
+              "user": "private",
+              "pass": "server"
+#socks
+            }
+          ],
+        "udp": true,
+        "ip": "127.0.0.1"
+      },
+      "streamSettings":{
+        "network": "ws",
+        "wsSettings": {
+          "path": "/socks5",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ]
+        }
+      }
+    },	
       {
         "listen": "127.0.0.1",
      "port": "24456",
@@ -123,7 +110,7 @@
          "decryption":"none",
            "clients": [
              {
-               "id": "0c2f11ae-f175-4730-a02b-9a9fe9e7cb3a"
+               "id": "cfbbaafc-8d52-450c-9fb0-145bc8221e6d"
 #vlessgrpc
              }
           ]
@@ -142,7 +129,7 @@
       "settings": {
             "clients": [
                {
-                 "id": "0c2f11ae-f175-4730-a02b-9a9fe9e7cb3a",
+                 "id": "cfbbaafc-8d52-450c-9fb0-145bc8221e6d",
                  "alterId": 0
 #vmessgrpc
              }
@@ -163,7 +150,7 @@
           "decryption":"none",
              "clients": [
                {
-                 "password": "0c2f11ae-f175-4730-a02b-9a9fe9e7cb3a"
+                 "password": "cfbbaafc-8d52-450c-9fb0-145bc8221e6d"
 #trojangrpc
                }
            ]
@@ -174,7 +161,28 @@
                "serviceName": "trojan-grpc"
          }
       }
-   }
+   },
+   {
+    "listen": "127.0.0.1",
+    "port": "30310",
+    "protocol": "shadowsocks",
+    "settings": {
+        "clients": [
+          {
+             "method": "aes-128-gcm",
+             "password": "cfbbaafc-8d52-450c-9fb0-145bc8221e6d"
+#socksgrpc
+           }
+         ],
+           "network": "tcp,udp"
+      },
+    "streamSettings":{
+     "network": "grpc",
+        "grpcSettings": {
+           "serviceName": "ss-grpc"
+          }
+       }
+    }	
   ],
   "outbounds": [
     {
