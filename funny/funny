@@ -62,11 +62,12 @@ clear
       echo -e "\e[93m Trojan\e[32;1m : STOPPED "
       echo -e "\e[93m Vless\e[32;1m  : STOPPED "
       echo -e "\e[93m Vmess\e[32;1m  : STOPPED "
+      echo -e "\e[93m Socks\e[32;1m  : STOPPED "
       echo -e ""        
       echo -e "${red} VPS Anda Tidak Izinkan \e[32;1m "
       echo -e "${red} Contact Admin Untuk Perizinan \e[32;1m" | lolcat
       echo -e ""
-      echo -e "\e[93m Telegram\e[32;1m : https://t.me/Funy_vpn"
+      echo -e "\e[93m Telegram\e[32;1m : https://t.me/amiqyu"
       echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | lolcat
       echo -e ""
       exit 0
