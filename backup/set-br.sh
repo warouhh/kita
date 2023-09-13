@@ -48,10 +48,12 @@ wget -O backup "https://raw.githubusercontent.com/awanklod/alvi/main/backup/back
 wget -O restore "https://raw.githubusercontent.com/awanklod/alvi/main/backup/restore.sh"
 wget -O strt "https://raw.githubusercontent.com/awanklod/alvi/main/backup/strt.sh"
 wget -O limitspeed "https://raw.githubusercontent.com/awanklod/alvi/main/backup/limitspeed.sh"
+wget -O menu-backup "https://raw.githubusercontent.com/awanklod/alvi/main/backup/menu-backup.sh"
 chmod +x autobackup
 chmod +x backup
 chmod +x restore
 chmod +x strt
 chmod +x limitspeed
+chmod +x menu-backup
 cd
 rm -f /root/set-br.sh
