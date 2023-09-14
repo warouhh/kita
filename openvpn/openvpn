@@ -109,7 +109,7 @@ function cert_ovpn() {
 # Delete script
  
 cd /var/www/html/
-zip Kyt-Project.zip tcp.ovpn udp.ovpn ssl.ovpn ws-ssl.ovpn > /dev/null 2>&1
+zip cloudvpn.zip tcp.ovpn udp.ovpn ssl.ovpn ws-ssl.ovpn > /dev/null 2>&1
 cd
 cat <<'mySiteOvpn' > /var/www/html/index.html
 <!DOCTYPE html>
